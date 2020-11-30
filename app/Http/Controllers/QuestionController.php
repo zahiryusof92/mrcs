@@ -119,6 +119,15 @@ class QuestionController extends Controller {
                                         'created_at' => date('Y-m-d H:i:s'),
                                         'updated_at' => date('Y-m-d H:i:s'),
                                     );
+                                } else {
+                                    $data[] = array(
+                                        'applicant_id' => $applicant_id,
+                                        'key' => $key,
+                                        'question' => $question,
+                                        'answer' => '',
+                                        'created_at' => date('Y-m-d H:i:s'),
+                                        'updated_at' => date('Y-m-d H:i:s'),
+                                    );
                                 }
                             }
                         }
