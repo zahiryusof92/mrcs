@@ -16,14 +16,20 @@
 
             <div class="row">
                 <aside class="col-xl-4 col-lg-4">
-                    <h2>{{ __('questions.title') }}</h2>
-                    <p class="lead text-justify">{{ __('questions.description') }}</p>
+                    <h5 class="text-center add_top_20">PROGRAM BANTUAN WANG TUNAI COVID-19</h5>                    
+                    <p class="text-justify">Menyedari bahawa ramai di kalangan rakyat Malaysia berdepan dengan cabaran kesihatan dan ekonomi disebabkan penularan wabak Covid-19 dan pelaksanaan Perintah Kawalan Pergerakan (PKP), Persatuan Bulan Sabit Merah Malaysia (PBSMM) telah memulakan Program Bantuan Wang Tunai Covid-19 bagi membantu golongan yang terkesan untuk dapat meneruskan kelangsungan hidup masing-masing.</p>
+                    <p class="text-justify">Bantuan ini terbuka kepada golongan B40, golongan yang kehilangan mata pencarian atau terjejas pendapatan, pengusaha IKS yang terjejas teruk ekoran pandemik Covid-19 dan PKP, warga emas dan golongan berkeperluan khas lain.</p>
+                    <p class="text-justify">Bantuan sebanyak RM300 akan disalurkan secara kredit ke akaun bank setiap penerima.</p>
                 </aside>
                 <!-- /aside -->
 
                 <div class="col-xl-8 col-lg-8">
-                    <div id="wizard_container">
-                        <div id="top-wizard">
+
+                    <h5 class="text-center add_top_20">{{ __('questions.title') }}</h5>
+                    <p class="text-justify">{{ __('questions.description') }}</p>
+
+                    <div id="wizard_container">                     
+                        <div id="top-wizard"> 
                             <strong>{{ __('questions.progress') }}</strong>
                             <div id="progressbar"></div>
                         </div>
@@ -58,7 +64,7 @@
                                             <label class="form-label" for="state"><span class="text-danger">*</span> {{ $count++ }}. {{ __('questions.state.title') }}</label>
                                             <input type="hidden" name="question[state]" value="{{ __('questions.state.title') }}">
                                             <small class="form-text text-muted"><i>{{ __('questions.state.help') }}</i></small>
-                                            <div class="form-group select"">                                              
+                                            <div class="form-group select">                                              
                                                 <div class="styled-select">
                                                     <select class="required" name="answer[state]" id="state" autocomplete="state">
                                                         <option value="">{{ __('questions.form.select') }}</option>
@@ -79,7 +85,7 @@
                                             <input type="hidden" name="question[ic_no]" value="{{ __('questions.ic_no.title') }}">
                                             <small class="form-text text-muted"><i>{{ __('questions.ic_no.help') }}</i></small>
                                             <div class="form-group">                                                
-                                                <input type="text" name="answer[ic_no]" id="ic_no" class="required form-control" placeholder="{{ __('questions.ic_no.title') }}" autocomplete="ic_no" minlength="6" value="{{ old('answer.ic_no') }}">
+                                                <input type="text" name="answer[ic_no]" id="ic_no" class="required form-control" placeholder="{{ __('questions.ic_no.title') }}" autocomplete="ic_no" minlength="6" maxlength="12" value="{{ old('answer.ic_no') }}">
                                             </div>
                                         </div>
                                         <!-- /col-sm-12 -->                                       
@@ -136,7 +142,7 @@
                                         <!-- /col-sm-12 -->
                                     </div>
                                     <!-- /row -->
-
+                                    
                                 </div>
                                 <!-- /step -->
 
@@ -206,7 +212,7 @@
                                             <label class="form-label" for="race"><span class="text-danger">*</span> {{ $count++ }}. {{ __('questions.race.title') }}</label>
                                             <input type="hidden" name="question[race]" value="{{ __('questions.race.title') }}">
                                             <small class="form-text text-muted"><i>{{ __('questions.race.help') }}</i></small>
-                                            <div class="form-group select"">                                                
+                                            <div class="form-group select">                                                
                                                 <div class="styled-select">
                                                     <select class="required" name="answer[race]" id="race" autocomplete="race">
                                                         <option value="">{{ __('questions.form.select') }}</option>
@@ -801,7 +807,7 @@
                                             <label class="form-label" for="bank_name"><span class="text-danger">*</span> {{ $count++ }}. {{ __('questions.bank_name.title') }}</label>
                                             <input type="hidden" name="question[bank_name]" value="{{ __('questions.bank_name.title') }}">
                                             <small class="form-text text-muted"><i>{{ __('questions.bank_name.help') }}</i></small>
-                                            <div class="form-group select"">                                                
+                                            <div class="form-group select">                                                
                                                 <div class="styled-select">
                                                     <select class="required" name="answer[bank_name]" id="bank_name" autocomplete="">
                                                         <option value="">{{ __('questions.form.select') }}</option>
@@ -903,31 +909,12 @@
 </div>
 <!-- /main_container -->
 
-<!-- Modal terms -->
-<div class="modal fade" id="terms-txt" tabindex="-1" role="dialog" aria-labelledby="termsLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">{{ __('questions.acknowledgement') }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>{{ __('questions.acknowledge.title') }}</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn_1" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+<div id="domMessage" style="display:none;"> 
+    <h5>Permohonan sedang dihantar...</h5> 
+</div> 
 @endsection
 
-@section('script')
+@push('script')
 <script>
     /*  Wizard */
     $("#wizard_container").wizard({
@@ -943,6 +930,11 @@
             var inputs = $(this).wizard('state').step.find(':input');
             return !inputs.length || !!inputs.valid();
         }
+    }).validate({
+        submitHandler: function (form) {
+            $.blockUI({message: $('#domMessage')});
+            form.submit();
+        }
     });
 
     //  progress bar
@@ -954,4 +946,4 @@
         }
     });
 </script>
-@endsection
+@endpush

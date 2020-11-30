@@ -18,7 +18,7 @@
 </div>
 @endsection
 
-@section('script')
+@push('script')
 <script>
     $(document).ready(function () {
         "use strict";
@@ -39,4 +39,4 @@
         });
     });
 </script>
-@endsection
+@endpush

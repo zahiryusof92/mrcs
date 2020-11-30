@@ -128,7 +128,7 @@ class QuestionController extends Controller {
 
                             if ($success) {
                                 if (isset($applicant['email']) && !empty($applicant['email'])) {
-//                                    Mail::to($applicant['email'])->send(new RegisterEmail());
+                                    Mail::to($applicant['email'])->send(new RegisterEmail());
                                 }
 
                                 return redirect()->route('questions.index')->with('success', __('questions.success.title'));

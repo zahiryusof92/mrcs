@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\ExcelController;
+use App\Http\Controllers\PdfController;
 
 /*
   |--------------------------------------------------------------------------
@@ -15,26 +18,29 @@ use App\Http\Controllers\MailController;
   |
  */
 
-Route::get('/', function () {
-    return view('index');
+Route::middleware('guest')->group(function () {
+    Route::get('/', function () {
+        return view('index');
+    });
+
+    Route::get('/questions', function () {
+        return view('questions');
+    });
+    
+    Route::get('mail/send', [MailController::class, 'send']);
+
+    Route::resource('questions', QuestionController::class)->only(['index', 'store']);    
 });
 
-Route::get('/questions', function () {
-    return view('questions');
+Auth::routes([
+    'register' => false,
+    'reset' => false,
+    'verify' => false
+]);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [ApplicantController::class, 'index'])->name('home');
+    Route::resource('applicants', ApplicantController::class)->only(['show']);
+    Route::resource('excel', ExcelController::class)->only(['index']);
+    Route::resource('pdf', PdfController::class)->only(['show']);
 });
-
-Route::get('/about', function () {
-    return view('about');
-});
-
-Route::get('/contact', function () {
-    return view('contact');
-});
-
-Route::resource('questions', QuestionController::class);
-
-Route::get('mail/send', [MailController::class, 'send']);
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

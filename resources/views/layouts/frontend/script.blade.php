@@ -8,6 +8,9 @@
 <script src="{{ asset('assets/layerslider/js/greensock.js') }}"></script>
 <script src="{{ asset('assets/layerslider/js/layerslider.transitions.js') }}"></script>
 <script src="{{ asset('assets/layerslider/js/layerslider.kreaturamedia.jquery.js') }}"></script>
+<!-- Sweetalert -->
 <script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
+<!-- BlockUI -->
+<script src="{{ asset('assets/js/blockUI.js') }}"></script>
 
-@yield('script')
+@stack('script')
