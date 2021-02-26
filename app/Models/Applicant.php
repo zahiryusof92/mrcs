@@ -11,7 +11,7 @@ class Applicant extends Model {
     use HasFactory;
 
     public function question() {
-        return $this->hasMany('App\Models\Question');
+        return $this->hasMany('App\Models\Question')->orderBy('sort_no');
     }
 
     public static function getTotalToday() {

@@ -42,5 +42,8 @@
                 </div>
             </main>
         </div>
+        
+        @include('alerts.sweetalert')
+        
     </body>
 </html>

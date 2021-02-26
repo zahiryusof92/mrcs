@@ -33,3 +33,13 @@
     });
 </script>
 @endif
+
+@if ($message = session('exceed'))
+<script>
+    swal({
+        title: "{{ $message }}",
+        text: "Atas sambutan yang luar biasa, kami telah pun mencapai had maksimum kapasiti pendaftaran. Semua pendaftaran yang telah dihantar akan diproses dengan kadar segera. Terima kasih.",
+        icon: "error"
+    });
+</script>
+@endif

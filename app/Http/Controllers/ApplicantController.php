@@ -90,7 +90,14 @@ class ApplicantController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Applicant $applicant) {
-        //
+        $deleted = $applicant->question()->delete();
+        if ($deleted) {
+            $applicant->delete();
+
+            return redirect()->back()->with('success', __('Berjaya dipadam'));
+        }
+
+        return redirect()->back()->with('error', __('Gagal dipadam'));
     }
 
 }

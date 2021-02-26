@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
-use App\Models\User;
 use App\Models\Applicant;
 use Illuminate\Http\Request;
 use App\Mail\RegisterEmail;
@@ -17,6 +16,11 @@ class QuestionController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        $total = Applicant::count();
+        if ($total >= 1313) {
+            return redirect()->to('/')->with('exceed', 'Harap Maaf, Pendaftaran Telah Ditutup!');
+        }
+        
         return view('questions.index');
     }
 
@@ -108,6 +112,7 @@ class QuestionController extends Controller {
                     $applicant_id = Applicant::insertGetId($applicant);
 
                     if ($applicant_id) {
+                        $sort_no = 0;
                         foreach ($request->question as $key => $question) {
                             if ($key) {
                                 if (array_key_exists($key, $request->answer)) {
@@ -116,6 +121,7 @@ class QuestionController extends Controller {
                                         'key' => $key,
                                         'question' => $question,
                                         'answer' => (is_array($request->answer[$key]) ? implode(', ', $request->answer[$key]) : $request->answer[$key]),
+                                        'sort_no' => $sort_no++,
                                         'created_at' => date('Y-m-d H:i:s'),
                                         'updated_at' => date('Y-m-d H:i:s'),
                                     );
@@ -125,6 +131,7 @@ class QuestionController extends Controller {
                                         'key' => $key,
                                         'question' => $question,
                                         'answer' => '',
+                                        'sort_no' => $sort_no++,
                                         'created_at' => date('Y-m-d H:i:s'),
                                         'updated_at' => date('Y-m-d H:i:s'),
                                     );

@@ -6,6 +6,7 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\FixController;
 
 /*
   |--------------------------------------------------------------------------
@@ -40,7 +41,10 @@ Auth::routes([
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', [ApplicantController::class, 'index'])->name('home');
-    Route::resource('applicants', ApplicantController::class)->only(['show']);
+    Route::resource('applicants', ApplicantController::class)->only(['show', 'destroy']);
     Route::resource('excel', ExcelController::class)->only(['index']);
     Route::resource('pdf', PdfController::class)->only(['show']);
+    
+    Route::get('/fix/updateFields', [FixController::class, 'updateFields'])->name('fix.updateFields');
+    Route::get('/fix/addSortNo', [FixController::class, 'addSortNo'])->name('fix.addSortNo');
 });
